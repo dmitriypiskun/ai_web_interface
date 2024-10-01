@@ -1,0 +1,41 @@
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 4px 16px;
+  border-radius: 6px;
+  height: 52px;
+  cursor: pointer;
+}
+
+.button-primary {
+  background-color: #10a37f;
+  color: #ffffff;
+  border: none;
+}
+
+.button-outline {
+  justify-content: flex-start;
+  border: 1px solid #c2c8d0;
+  background-color: #ffffff;
+}
+
+.button:hover,
+.button-primary:hover,
+.button-outline:hover {
+  box-shadow: inset 0 0 0 150px #0000001a;
+}
+
+.button-content {
+  display: block;
+  height: 20px;
+}
+
+.button-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  pointer-events: auto;
+}

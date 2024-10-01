@@ -12,15 +12,20 @@
   justify-content: center;
   text-align: center;
   flex-grow: 1;
+  width: 320px;
 }
 
 .footer {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--fw-medium);
   padding: 32px;
+  gap: 8px;
 }
 
 .logo {
-  height: 128px;
-  width: 128px;
-  color: #ffffff;
+  height: 68px;
+  width: 64px;
 }
