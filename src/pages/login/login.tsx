@@ -6,6 +6,7 @@ import styles from "./login.module.css";
 import googleIcon from "../../assets/google.png";
 import showIcon from "../../assets/show.svg";
 import hideIcon from "../../assets/hide.svg";
+import { useAuthenticateContext } from "../../contexts/authenticate.context";
 
 const target = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$");
 
@@ -15,7 +16,7 @@ export interface LoginProps {}
 export const Login: React.FC<LoginProps> = () => {
   const [step, setStep] = useState(0);
 
-  const [email, setEmail] = useState("example.example@example.com");
+  const [email, setEmail] = useState<string>("example.example@example.com");
   const [isEmailError, setIsEmailError] = useState(false);
 
   const [password, setPassword] = useState("");
@@ -24,6 +25,7 @@ export const Login: React.FC<LoginProps> = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const { login } = useAuthenticateContext();
 
   const handleNextClick = () => {
     const isEmailValid = target.test(email);
@@ -36,10 +38,10 @@ export const Login: React.FC<LoginProps> = () => {
     }
   };
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
     if (password) {
       setIsPasswordError(false);
-      alert("Call login api");
+      await login({ email, password });
     } else {
       setIsPasswordError(true);
     }
