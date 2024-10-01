@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 32px 0px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.footer {
+  text-align: center;
+  padding: 32px;
+}
+
+.logo {
+  height: 128px;
+  width: 128px;
+  color: #ffffff;
+}
