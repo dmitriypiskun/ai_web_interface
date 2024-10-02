@@ -6,6 +6,7 @@ import styles from "./login.module.css";
 import googleIcon from "../../assets/google.png";
 import showIcon from "../../assets/show.svg";
 import hideIcon from "../../assets/hide.svg";
+import { useAuthenticateContext } from "../../contexts/authenticate.context";
 
 const target = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$");
 
@@ -15,7 +16,7 @@ export interface LoginProps {}
 export const Login: React.FC<LoginProps> = () => {
   const [step, setStep] = useState(0);
 
-  const [email, setEmail] = useState("example.example@example.com");
+  const [email, setEmail] = useState<string>("example.example@example.com");
   const [isEmailError, setIsEmailError] = useState(false);
 
   const [password, setPassword] = useState("");
@@ -24,6 +25,7 @@ export const Login: React.FC<LoginProps> = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const { login, googleLogin } = useAuthenticateContext();
 
   const handleNextClick = () => {
     const isEmailValid = target.test(email);
@@ -36,10 +38,10 @@ export const Login: React.FC<LoginProps> = () => {
     }
   };
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
     if (password) {
       setIsPasswordError(false);
-      alert("Call login api");
+      await login({ email, password });
     } else {
       setIsPasswordError(true);
     }
@@ -90,6 +92,7 @@ export const Login: React.FC<LoginProps> = () => {
           onChange={setPassword}
         >
           <button
+            aria-label={isShowPassword ? "Скрыть пароль" : "Показать пароль"}
             className={styles["button-password"]}
             onClick={handlePasswordVisibilityToggle}
           >
@@ -124,19 +127,23 @@ export const Login: React.FC<LoginProps> = () => {
         <Link label="Зарегистрироваться" onClick={() => navigate("register")} />
       </span>
 
-      <Divider label="Или" />
+      {step === 0 && (
+        <>
+          <Divider label="Или" />
 
-      <Button
-        type="outline"
-        text="Продолжить с Google"
-        onClick={handleNextClick}
-      >
-        <img
-          src={googleIcon}
-          alt="Google icon"
-          className={styles["button-image"]}
-        />
-      </Button>
+          <Button
+            type="outline"
+            text="Продолжить с Google"
+            onClick={googleLogin}
+          >
+            <img
+              src={googleIcon}
+              alt="Google icon"
+              className={styles["button-image"]}
+            />
+          </Button>
+        </>
+      )}
     </form>
   );
 };
