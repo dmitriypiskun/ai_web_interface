@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+# AI web interface
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## General description
 
-Currently, two official plugins are available:
+This project is a web interface for an AI assistant app, similar in functionality and design to ChatGPT.
+The application contains 2 pages: **registration** and **login**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Install and run
 
-## Expanding the ESLint configuration
+To start the project, you need to complete the following steps:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Install the necessary dependencies for the project. To do this, run the command in the root of the project:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+$ npm ci
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Add a file with environment variables(`.env`) to the root of the project.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+List of variables in **.env** file:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+| №   | Name                        | Description                                 |
+| :-- | :-------------------------- | ------------------------------------------- |
+| 1   | VITE_API_URL                | Sets API URL                                |
+| 2   | VITE_GOOGLE_AUTH_CLIENT_ID= | Sets the client ID for Google authorization |
+
+3.The last step is to launch the project with the command:
+
+```bash
+$ npm run dev
 ```
+
+## Commands
+
+```bash
+# Run build project
+$ npm run build
+
+# Start
+$ npm run dev
+
+# Run lint
+$ npm run lint
+```
+
+## Libraries
+
+- <a alt="React logo" href="https://react.dev" target="_blank" rel="noreferrer"><img src="https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png" width="35"></a>
+- [React OAuth2 | Google](https://github.com/MomenSherif/react-oauth)
+- [classnames](https://github.com/JedWatson/classnames)
