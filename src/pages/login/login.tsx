@@ -92,6 +92,7 @@ export const Login: React.FC<LoginProps> = () => {
           onChange={setPassword}
         >
           <button
+            aria-label={isShowPassword ? "Скрыть пароль" : "Показать пароль"}
             className={styles["button-password"]}
             onClick={handlePasswordVisibilityToggle}
           >
@@ -126,15 +127,23 @@ export const Login: React.FC<LoginProps> = () => {
         <Link label="Зарегистрироваться" onClick={() => navigate("register")} />
       </span>
 
-      <Divider label="Или" />
+      {step === 0 && (
+        <>
+          <Divider label="Или" />
 
-      <Button type="outline" text="Продолжить с Google" onClick={googleLogin}>
-        <img
-          src={googleIcon}
-          alt="Google icon"
-          className={styles["button-image"]}
-        />
-      </Button>
+          <Button
+            type="outline"
+            text="Продолжить с Google"
+            onClick={googleLogin}
+          >
+            <img
+              src={googleIcon}
+              alt="Google icon"
+              className={styles["button-image"]}
+            />
+          </Button>
+        </>
+      )}
     </form>
   );
 };

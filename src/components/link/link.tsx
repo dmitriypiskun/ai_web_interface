@@ -20,8 +20,13 @@ export const Link: React.FC<LinkProps> = ({
   });
 
   return (
-    <a className={classes} style={style} onClick={onClick}>
+    <button
+      className={classes}
+      aria-label={label}
+      style={style}
+      onClick={onClick}
+    >
       {label}
-    </a>
+    </button>
   );
 };

@@ -48,6 +48,9 @@ export const InputField: React.FC<PropsWithChildren<InputFieldProps>> = ({
           type={type}
           placeholder={placeholder}
           className={styles["input"]}
+          aria-label={placeholder}
+          aria-required={isRequired}
+          aria-errormessage={errorText}
           onChange={(e) => onChange(e.target.value)}
         />
         {children}
