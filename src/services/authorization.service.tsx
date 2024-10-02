@@ -5,6 +5,12 @@ export interface LoginParams {
   password: string;
 }
 
+export interface RegisterParams {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export interface User {
   id: string;
   username: string;
@@ -16,6 +22,23 @@ export interface User {
 export class AuthorizationService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static async login(data: LoginParams): Promise<User | null> {
+    try {
+      const response = await new Promise<{ user: User }>((resolve) => {
+        resolve(loginData);
+      });
+
+      if (!response) {
+        throw new Error("User not found");
+      }
+
+      return response?.user;
+    } catch {
+      throw new Error("Incorrect email or password");
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  static async register(data: RegisterParams): Promise<User> {
     try {
       const response = await new Promise<{ user: User }>((resolve) => {
         resolve(loginData);
