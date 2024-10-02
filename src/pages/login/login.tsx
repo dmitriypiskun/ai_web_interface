@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link, Button, Divider, InputField } from "../../components";
+import {
+  Link,
+  Button,
+  Divider,
+  InputField,
+  PasswordField,
+} from "../../components";
 import styles from "./login.module.css";
 
 import googleIcon from "../../assets/google.png";
-import showIcon from "../../assets/show.svg";
-import hideIcon from "../../assets/hide.svg";
-import { useAuthenticateContext } from "../../contexts/authenticate.context";
 
-const target = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$");
+import { useAuthenticateContext } from "../../contexts/authenticate.context";
+import { emailValidate } from "../../utils/validation";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface LoginProps {}
@@ -16,19 +20,17 @@ export interface LoginProps {}
 export const Login: React.FC<LoginProps> = () => {
   const [step, setStep] = useState(0);
 
-  const [email, setEmail] = useState<string>("example.example@example.com");
+  const [email, setEmail] = useState<string>("");
   const [isEmailError, setIsEmailError] = useState(false);
 
   const [password, setPassword] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
 
-  const [isShowPassword, setIsShowPassword] = useState(false);
-
   const navigate = useNavigate();
   const { login, googleLogin } = useAuthenticateContext();
 
   const handleNextClick = () => {
-    const isEmailValid = target.test(email);
+    const isEmailValid = emailValidate(email);
 
     if (isEmailValid) {
       setIsEmailError(false);
@@ -48,13 +50,6 @@ export const Login: React.FC<LoginProps> = () => {
   };
 
   const handleRememberPasswordClick = () => {};
-
-  const handlePasswordVisibilityToggle = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    setIsShowPassword(!isShowPassword);
-  };
 
   const firstStep = (
     <>
@@ -82,27 +77,12 @@ export const Login: React.FC<LoginProps> = () => {
           <Link label="Редактировать" onClick={() => setStep(0)} />
         </div>
 
-        <InputField
-          isRequired
-          type={isShowPassword ? "text" : "password"}
+        <PasswordField
           label="Пароль"
           value={password}
           isErrored={isPasswordError}
-          errorText="Не заполнено поле"
           onChange={setPassword}
-        >
-          <button
-            aria-label={isShowPassword ? "Скрыть пароль" : "Показать пароль"}
-            className={styles["button-password"]}
-            onClick={handlePasswordVisibilityToggle}
-          >
-            <img
-              src={isShowPassword ? showIcon : hideIcon}
-              alt={isShowPassword ? "Скрыть пароль" : "Показать пароль"}
-              className={styles["button-password-icon"]}
-            />
-          </button>
-        </InputField>
+        />
 
         <Link
           label="Забыли пароль?"
@@ -124,7 +104,10 @@ export const Login: React.FC<LoginProps> = () => {
 
       <span>
         У вас нет учетной записи?{" "}
-        <Link label="Зарегистрироваться" onClick={() => navigate("register")} />
+        <Link
+          label="Зарегистрироваться"
+          onClick={() => navigate("/register")}
+        />
       </span>
 
       {step === 0 && (
