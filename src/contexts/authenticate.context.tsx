@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { AuthorizationService } from "../services/authorization.service";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export interface LoginData {
   email: string;
@@ -17,6 +18,7 @@ export interface User {
 export interface AuthenticateContextProps {
   user: User | null;
   login: (data: LoginData) => Promise<void>;
+  googleLogin: () => void;
 }
 
 export const AuthenticateContext =
@@ -27,15 +29,29 @@ export const AuthenticateProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const googleLogin = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (response) => {
+      console.log(response);
+    },
+    onError: (error) => {
+      alert(error.error_description);
+    },
+  });
+
   const login = async (data: LoginData) => {
-    if (data.email && data.password) {
-      const result = await AuthorizationService.login(data);
-      setUser(result);
+    try {
+      if (data.email && data.password) {
+        const result = await AuthorizationService.login(data);
+        setUser(result);
+      }
+    } catch (error) {
+      alert((error as Error).message);
     }
   };
 
   return (
-    <AuthenticateContext.Provider value={{ user, login }}>
+    <AuthenticateContext.Provider value={{ user, login, googleLogin }}>
       {children}
     </AuthenticateContext.Provider>
   );

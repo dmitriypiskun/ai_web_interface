@@ -25,7 +25,7 @@ export const Login: React.FC<LoginProps> = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  const { login } = useAuthenticateContext();
+  const { login, googleLogin } = useAuthenticateContext();
 
   const handleNextClick = () => {
     const isEmailValid = target.test(email);
@@ -128,11 +128,7 @@ export const Login: React.FC<LoginProps> = () => {
 
       <Divider label="Или" />
 
-      <Button
-        type="outline"
-        text="Продолжить с Google"
-        onClick={handleNextClick}
-      >
+      <Button type="outline" text="Продолжить с Google" onClick={googleLogin}>
         <img
           src={googleIcon}
           alt="Google icon"

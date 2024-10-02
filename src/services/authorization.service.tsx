@@ -14,22 +14,20 @@ export interface User {
 }
 
 export class AuthorizationService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static async login(data: LoginParams): Promise<User | null> {
     try {
-      const response = new Promise<{ user: User }>((resolve) => {
+      const response = await new Promise<{ user: User }>((resolve) => {
         resolve(loginData);
       });
 
-      const result = await response;
-
-      if (!result) {
+      if (!response) {
         throw new Error("User not found");
       }
 
-      return result?.user;
-    } catch (error) {
-      console.log(error);
-      return null;
+      return response?.user;
+    } catch {
+      throw new Error("Incorrect email or password");
     }
   }
 }
